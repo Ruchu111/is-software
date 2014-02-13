@@ -1,11 +1,23 @@
 class SoftwaresController < ApplicationController
-  before_action :set_software, only: [:show, :edit, :update, :destroy, :allocate]
+  #before_action :set_software, only: [:show, :edit, :update, :destroy, :allocate]
 
   def index
-    @softwares = Software.search(params[:software_name],params[:software][:operating_system_id])
+    @softwares = Software.all
   end
 
   def show
+  end
+
+  def mac
+    @softwares = Software.all
+  end
+
+  def linux
+
+  end
+
+  def windows
+
   end
 
   def new

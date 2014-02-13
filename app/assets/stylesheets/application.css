@@ -12,21 +12,7 @@
 *= require_self
 *= require_tree .
 */
-.wrap{
-  word-wrap: break-word;
-}
 
-.layout{
-  margin-left: 10%;
-  border: 2px;
-}
-
-.logo{
-  width: 59%;
-margin-left: 16%;
-margin-top: 10%;
-}
-
-.form-container{
-  background-color: #f8f8f8;
+.content {
+    margin: 0 20px;
 }

@@ -1,19 +1,23 @@
 IsSoftware::Application.routes.draw do
-  resources :softwares do
-    resources :allocations, only: [:create]
-  end
-  
+
+  #resources :softwares do
+  #  resources :allocations, only: [:create]
+  #end
+
   resources :downloads, only: [:show]
+  get '/softwares/mac', controller: 'softwares#mac'
+  get '/softwares/linux', controller: 'softwares#linux'
+  get '/softwares/windows', controller: 'softwares#windows'
+  get '/softwares/ios', controller: 'softwares#ios'
 
   get 'not_found' => 'application#not_found'
+  root 'softwares#mac'
 
-    root 'home#index'
-
-    
-    resources :softwares, only: [:index, :new, :create] do
-    collection do
-      get :search
-    end
+  resources :softwares, only: [:index, :new, :create] do
+  #
+  #  collection do
+  #    get :search
+  #  end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -56,7 +60,7 @@ IsSoftware::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
