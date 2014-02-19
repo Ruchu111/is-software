@@ -21,19 +21,19 @@
   </thead>
 
   <tbody>
-    <% @softwares.each do |software| %>
+    <% @files.each do |software| %>
       <tr>
-        <td><%= software.name %></td>
-        <td><%= software.path %></td>
-        <td class='wrap'><%= software_download_link(software) %></td>
-		<td><%= software.freeware? ? 'Freeware' : 'Paid License' %></td>
-        <td><%= software.description %></td>
-        <td><%= OperatingSystem.find(software.operating_system_id).name%></td>
-        <td><%= software.download_count %></td>
-        <td><%= software.state.name %></td>
-        <td><%= link_to 'Show', software %></td>
-        <td><%= link_to 'Edit', edit_software_path(software) %></td>
-        <td><%= link_to 'Destroy', software, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=link_to software, softwares_download_path(:soft => software) %></td>
+        <td><%#= software.path %> </td>
+        <td class='wrap'><%#= software_download_link(software) %></td>
+		<td><%#= software.freeware? ? 'Freeware' : 'Paid License' %></td>
+        <td><%#= software.description %></td>
+        <td><%#= OperatingSystem.find(software.operating_system_id).name%></td>
+        <td><%#= software.download_count %></td>
+        <td><%#= software.state.name %></td>
+        <td><%#= link_to 'Show', software %></td>
+        <td><%#= link_to 'Edit', edit_software_path(software) %></td>
+        <td><%#= link_to 'Destroy', software, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

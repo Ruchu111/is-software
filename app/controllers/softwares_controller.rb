@@ -2,13 +2,20 @@ class SoftwaresController < ApplicationController
   #before_action :set_software, only: [:show, :edit, :update, :destroy, :allocate]
 
   def index
-    @softwares = Software.all
   end
 
   def show
   end
 
+  def download 
+    p "ruchi>>>>>>>>>>>>>>>>>>>", params[:soft]
+    # @software = Software.find(params[:soft])
+    # binding.pry;
+    send_file params[:soft], :disposition => 'attachment'
+      end
+
   def mac
+    @files = Dir["/Volumes/Shared/Mac Softwares/*"]
     @softwares = Software.all
   end
 
