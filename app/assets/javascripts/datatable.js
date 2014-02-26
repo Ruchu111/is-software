@@ -3,4 +3,4 @@ var dataTable = function () {
 }
 
 $(document).ready(dataTable);
-
+$(document).on('page:load', dataTable);

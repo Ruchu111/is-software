@@ -1,0 +1,53 @@
+@import "mixins/colors";
+
+.dataTables_length, .dataTables_info, .dataTables_paginate {
+  display: none;
+}
+
+.sorting, .sorting_asc {
+  background: none;
+}
+
+table.dataTable {
+  thead {
+    background: $navbar_background_color;
+    color: $navbar_link_color;
+    th {
+      padding: 8px 18px 8px 10px;
+      cursor: auto;
+    }
+  }
+
+  tr.odd {
+    background-color: $table_odd_row_color;
+    td.sorting_1 {
+      background-color: $table_odd_row_color;
+    }
+  }
+
+  tr.even td.sorting_1 {
+    background-color: $table_even_row_color;
+  }
+}
+
+.dataTables_filter {
+  width: 20%;
+  text-align: left;
+  margin-bottom: 5px;
+  input[type="text"] {
+    height: 30px;
+    padding: 6px 12px;
+    width: 255px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  }
+}
