@@ -9,6 +9,9 @@ IsSoftware::Application.routes.draw do
   get '/softwares/linux', controller: 'softwares#linux'
   get '/softwares/windows', controller: 'softwares#windows'
   get '/softwares/ios', controller: 'softwares#ios'
+  get '/softwares/download', controller: 'softwares#download', as: :softwares_download
+  get 'not_found' => 'application#not_found'
+  get 'logout' => 'application#logout'
 
   get 'not_found' => 'application#not_found'
   root 'softwares#mac'

@@ -27,7 +27,5 @@ module IsSoftware
     # config.i18n.default_locale = :de
 
     # CAS config
-    config.rubycas.cas_base_url = 'https://cas.thoughtworks.com/cas/'
-    config.rubycas.logger = Rails.logger
   end
 end

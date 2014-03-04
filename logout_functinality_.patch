@@ -1,0 +1,140 @@
+Index: config/routes.rb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/routes.rb	(date 1392799309000)
++++ config/routes.rb	(revision )
+@@ -13,6 +13,7 @@
+   get '/softwares/ios', controller: 'softwares#ios'
+   get '/softwares/download', controller: 'softwares#download', as: :softwares_download
+   get 'not_found' => 'application#not_found'
++  get 'logout' => 'application#logout'
+ 
+ 
+   resources :softwares, only: [:index, :new, :create] do
+Index: Gemfile
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Gemfile	(date 1392799309000)
++++ Gemfile	(revision )
+@@ -4,8 +4,7 @@
+ 
+ gem 'sqlite3'
+ 
+-gem 'rubycas-client', '2.2.1'
+-gem 'rubycas-client-rails'
++gem "rubycas-client", "~> 2.3.9"
+ 
+ gem 'sass-rails', '~> 4.0.0'
+ gem 'bootstrap-sass', '~> 3.0.3.0'
+Index: config/environment.rb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/environment.rb	(date 1392799309000)
++++ config/environment.rb	(revision )
+@@ -1,6 +1,11 @@
+ # Load the Rails application.
+ require File.expand_path('../application', __FILE__)
++require 'casclient'
++require 'casclient/frameworks/rails/filter'
+ 
++CASClient::Frameworks::Rails::Filter.configure(
++    :cas_base_url => "https://cas.thoughtworks.com/cas"
++)
+ # Initialize the Rails application.
+ IsSoftware::Application.initialize!
+ 
+Index: Gemfile.lock
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Gemfile.lock	(date 1392799309000)
++++ Gemfile.lock	(revision )
+@@ -80,11 +80,8 @@
+     rake (10.1.0)
+     rdoc (3.12.2)
+       json (~> 1.4)
+-    rubycas-client (2.2.1)
++    rubycas-client (2.3.9)
+       activesupport
+-    rubycas-client-rails (0.1.0)
+-      rails (>= 3.0.0)
+-      rubycas-client (>= 2.2.0)
+     sass (3.2.12)
+     sass-rails (4.0.1)
+       railties (>= 4.0.0, < 5.0)
+@@ -128,8 +125,7 @@
+   jquery-rails
+   pry
+   rails (= 4.0.0)
+-  rubycas-client (= 2.2.1)
+-  rubycas-client-rails
++  rubycas-client (~> 2.3.9)
+   sass-rails (~> 4.0.0)
+   sdoc
+   sqlite3
+Index: config/application.rb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/application.rb	(date 1392799309000)
++++ config/application.rb	(revision )
+@@ -27,7 +27,5 @@
+     # config.i18n.default_locale = :de
+ 
+     # CAS config
+-    config.rubycas.cas_base_url = 'https://cas.thoughtworks.com/cas/'
+-    config.rubycas.logger = Rails.logger
+   end
+ end
+Index: app/controllers/application_controller.rb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/controllers/application_controller.rb	(date 1392799309000)
++++ app/controllers/application_controller.rb	(revision )
+@@ -1,14 +1,14 @@
+ class ApplicationController < ActionController::Base
+   protect_from_forgery with: :exception
+-  before_filter RubyCAS::Filter
+-  append_before_filter :authenticate
+ 
++  before_filter CASClient::Frameworks::Rails::Filter
++
+   def not_found
+     render status: 404
+-  end 
++  end
+ 
+-  private
+-  def authenticate
+-    @current_user = User.where(emp_id: session[:cas_user]).first_or_create
++  def logout
++    CASClient::Frameworks::Rails::Filter.logout(self)
+   end
++
+ end
+Index: app/views/layouts/application.html.erb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/views/layouts/application.html.erb	(date 1392799309000)
++++ app/views/layouts/application.html.erb	(revision )
+@@ -30,7 +30,7 @@
+ 
+       <ul class="nav navbar-nav navbar-right">
+         <li><a><%= session[:cas_user] %></a></li>
+-        <li><a href="#">Logout</a></li>
++        <li><a href="/logout">Logout</a></li>
+       </ul>
+     </div>
+   </div>

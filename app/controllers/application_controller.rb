@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_filter RubyCAS::Filter
-  append_before_filter :authenticate
+
+  before_filter CASClient::Frameworks::Rails::Filter
 
   def not_found
     render status: 404
-  end 
-
-  private
-  def authenticate
-    @current_user = User.where(emp_id: session[:cas_user]).first_or_create
   end
+
+  def logout
+    CASClient::Frameworks::Rails::Filter.logout(self)
+  end
+
 end

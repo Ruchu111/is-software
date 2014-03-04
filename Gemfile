@@ -4,8 +4,7 @@ gem 'rails', '4.0.0'
 
 gem 'sqlite3'
 
-gem 'rubycas-client', '2.2.1'
-gem 'rubycas-client-rails'
+gem "rubycas-client", "~> 2.3.9"
 
 gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.0.3.0'
